@@ -1,5 +1,4 @@
-﻿using System;
-using ScriptEngine.Machine.Contexts;
+﻿using ScriptEngine.Machine.Contexts;
 using ScriptEngine.Machine;
 
 namespace oscriptcomponent
@@ -7,10 +6,10 @@ namespace oscriptcomponent
 	/// <summary>
 	/// Некоторый класс
 	/// </summary>
-	[ContextClass("МойКласс", "MyClass")]
-	public class MyClass : AutoContext<MyClass>
+	[ContextClass("КлиентSSH", "ClientSSH")]
+	public class ClientSSH : AutoContext<ClientSSH>
 	{
-		public MyClass()
+		public ClientSSH()
 		{
 		}
 
@@ -33,7 +32,7 @@ namespace oscriptcomponent
 		[ScriptConstructor]
 		public static IRuntimeContextInstance Constructor()
 		{
-			return new MyClass();
+			return new ClientSSH();
 		}
 	}
 }

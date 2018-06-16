@@ -1,0 +1,16 @@
+
+\.idea/
+
+NUnitTests/bin/
+
+NUnitTests/obj/
+
+oscript-component/bin/
+
+oscript-component/obj/
+
+packages/
+
+TestApp/bin/
+
+TestApp/obj/

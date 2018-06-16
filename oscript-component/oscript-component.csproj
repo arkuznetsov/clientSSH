@@ -17,7 +17,7 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-	<DocumentationFile>bin\Debug\oscript-component.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\oscript-component.xml</DocumentationFile>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -26,16 +26,12 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-	<DocumentationFile>bin\Debug\oscript-component.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\oscript-component.xml</DocumentationFile>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
     <Reference Include="DotNetZip">
       <HintPath>..\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="ScriptEngine">
       <HintPath>..\packages\OneScript.1.0.16\lib\net40\ScriptEngine.dll</HintPath>
@@ -45,10 +41,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyClass.cs" />
+    <Compile Include="ClientSSH.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CalcItem.cs" />
-    <Compile Include="Calculation.cs" />
     <Compile Include="OperationTypesEnum.cs" />
   </ItemGroup>
   <ItemGroup>

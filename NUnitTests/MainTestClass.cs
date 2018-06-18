@@ -14,13 +14,13 @@ namespace NUnitTests
 	public class MainTestClass
 	{
 
-		private EngineHelpWrapper host;
+		private EngineHelpWrapper _host;
 
 		[OneTimeSetUp]
 		public void Initialize()
 		{
-			host = new EngineHelpWrapper();
-			host.StartEngine();
+			_host = new EngineHelpWrapper();
+			_host.StartEngine();
 		}
 
 		[Test]
@@ -34,7 +34,7 @@ namespace NUnitTests
 		[Test]
 		public void TestAsExternalObjects()
 		{
-			host.RunTestScript("NUnitTests.Tests.external.os");
+			_host.RunTestScript("NUnitTests.Tests.external.os");
 		}
 	}
 }

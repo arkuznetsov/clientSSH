@@ -26,7 +26,7 @@ namespace NUnitTests
 		[Test]
 		public void TestAsInternalObjects()
 		{
-			var item1 = new ClientSSH();
+			var item1 = new ClientSsh("", 22, "", "");
        
 //			Assert.AreEqual(item1.ReadonlyProperty, "MyValue"); 
 		}

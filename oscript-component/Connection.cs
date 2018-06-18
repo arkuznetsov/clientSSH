@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using ScriptEngine.Machine;
 using ScriptEngine.Machine.Contexts;
 using Renci.SshNet;
@@ -19,6 +18,7 @@ namespace oscriptcomponent
         public Connection(SshClient ssh)
         {
             _sshClient = ssh;
+            _sshClient.Connect();
         }
 
         
@@ -31,7 +31,8 @@ namespace oscriptcomponent
         {
 
           var result = "";
-            using(var cmd = _sshClient.CreateCommand(command, Encoding.UTF8)){
+            using(var cmd = _sshClient.CreateCommand(command, Encoding.UTF8))
+            {
                 
                 cmd.Execute();
                 result = cmd.Result;
@@ -40,74 +41,6 @@ namespace oscriptcomponent
            return result;
             
         }
-    
-        
-        /// <summary>
-        /// Установить соединение
-        /// </summary>
-        [ContextMethod("Установить")]
-        public void Connect()
-        {
-    
-            _sshClient.Connect();
-      
-        }
-
-        /// <summary>
-        /// Получить поток
-        /// </summary>
-        [ContextMethod("ПолучитьПоток")]
-        public void getSteream()
-        {
-    
-           _sshStream = _sshClient.CreateShellStream("xterm", 80, 50, 1024, 1024, 1024);
-
-            while (!_sshStream.DataAvailable)
-                System.Threading.Thread.Sleep(200);
-        
-            var line = _sshStream.Read();
-            _sshStream.Flush();
-//            return stream;
-      
-        }
-
-        /// <summary>
-        /// Записать в поток
-        /// </summary>
-        [ContextMethod("ЗаписатьВПоток")]
-        public string WriteLine(string command)
-        {
-    
-            _sshStream.Flush();
-            _sshStream.WriteLine(command);
-
-            
-            StringBuilder output = new StringBuilder();
- 
-            string line;
-
-            while (!_sshStream.DataAvailable)
-                System.Threading.Thread.Sleep(200);
-
-
-            var num = 0;
-            while (_sshStream.DataAvailable)
-            {
-                if (num > 1)
-                {
-                    output.Append('\n');
-                }
-                line = _sshStream.ReadLine();
-                output.Append(line);
-                num++;
-                
-            }
-         
-
-            return output.ToString();
-
-        }
-
         
         /// <summary>
         /// Закрыть соединение

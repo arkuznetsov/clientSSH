@@ -5,52 +5,59 @@ using ScriptEngine.Machine;
 namespace oscriptcomponent
 {
     /// <summary>
-    /// Некоторый класс
+    /// КлиентSSH
     /// </summary>
     [ContextClass("КлиентSSH", "ClientSSH")]
-    public class ClientSSH : AutoContext<ClientSSH>
+    public class ClientSsh : AutoContext<ClientSsh>
     {
+        private readonly string _host;
+        private readonly int _port;
+        private readonly string _user;
+        private readonly string _pass;
 
-        private  SshClient _sshClient;
-        
-        public ClientSSH()
+        public ClientSsh(string host, int port, string user, string pass)
         {
+            _host = host;
+            _port = port;
+            _user = user;
+            _pass = pass;
         }
 
         
         /// <summary>
         /// Получить соединение
         /// </summary>
-        [ContextMethod("ПолучитьСоединение")]
-        public Connection Create(string Host, int Port, string User, string Pass)
+        [ContextMethod("ПолучитьПоток")]
+        public Stream CreateStream()
         {
 
-          var sclient = new SshClient(Host, Port, User, Pass);
+          var sclient = new SshClient(_host, _port, _user, _pass);
+            
+            return new Stream(sclient);
+        }
+
+        /// <summary>
+        /// Получить поток
+        /// </summary>
+        [ContextMethod("ПолучитьСоединение")]
+        public Connection Create()
+        {
+
+            var sclient = new SshClient(_host, _port, _user, _pass);
             
             return new Connection(sclient);
         }
-  
-        
-        /// <summary>
-        /// Разорвать соединение
-        /// </summary>
-        [ContextMethod("РазорватьСоединение")]
-        public void Close()
-        {
 
-                _sshClient.Disconnect();
-            
-        }
-    
         
         /// <summary>
-        /// Некоторый конструктор
+        /// Создает КлиентSSH
         /// </summary>
-        /// <returns></returns>
+        /// <returns>КлиентSSH</returns>
+        /// <param name="host">Хост</param>>
         [ScriptConstructor]
-        public static IRuntimeContextInstance Constructor()
+        public static IRuntimeContextInstance Constructor(IValue host, IValue port, IValue user, IValue pass)
         {
-            return new ClientSSH();
+            return new ClientSsh(host.AsString(), (int) port.AsNumber() , user.AsString(), pass.AsString());
         }
     }
 }

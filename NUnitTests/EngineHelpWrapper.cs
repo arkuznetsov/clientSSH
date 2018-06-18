@@ -49,7 +49,7 @@ namespace NUnitTests
 			
 			{
 				var mi = engine.GetType().GetMethod("SetGlobalEnvironment",
-					BindingFlags.NonPublic | BindingFlags.InvokeMethod | BindingFlags.Instance);
+					BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.InvokeMethod | BindingFlags.Instance);
 				mi.Invoke(engine, new object[] {this, testrunnerSource});
 			}
 

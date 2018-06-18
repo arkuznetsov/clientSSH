@@ -14,40 +14,68 @@ namespace oscriptcomponent
         private readonly int _port;
         private readonly string _user;
         private readonly string _pass;
+        private PrivateKeyFile _keyfile;
+        private bool _keyFileIsset;
 
         public ClientSsh(string host, int port, string user, string pass)
         {
+            
             _host = host;
             _port = port;
             _user = user;
             _pass = pass;
+            
         }
 
         
         /// <summary>
-        /// Получить соединение
+        /// Получить Поток
         /// </summary>
         [ContextMethod("ПолучитьПоток")]
         public Stream CreateStream()
         {
 
-          var sclient = new SshClient(_host, _port, _user, _pass);
+            var sclient = new SshClient(_host, _port, _user, _pass);
             
             return new Stream(sclient);
         }
 
+        
         /// <summary>
-        /// Получить поток
+        /// Получить Соединение
         /// </summary>
         [ContextMethod("ПолучитьСоединение")]
         public Connection Create()
         {
 
-            var sclient = new SshClient(_host, _port, _user, _pass);
+            if (_keyFileIsset)
+            {
             
-            return new Connection(sclient);
+                var sclient  = new SshClient(_host, _port, _user, _keyfile);
+                return new Connection(sclient);
+               
+            }
+            else
+            {
+                var sclient = new SshClient(_host, _port, _user, _pass); 
+                return new Connection(sclient);
+            }
+
+            
         }
 
+        
+        /// <summary>
+        /// Установить ключ
+        /// </summary>
+        [ContextMethod("УстановитьКлюч")]
+        public void SetSshKey(string keyfile, string pass = "")
+        {
+
+            _keyfile = new PrivateKeyFile(keyfile, pass);
+            _keyFileIsset = true;
+
+        }
         
         /// <summary>
         /// Создает КлиентSSH

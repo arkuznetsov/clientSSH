@@ -1,4 +1,4 @@
-version: 1.0.{build}
+version: 0.2.1.{build}
 environment:
   main_project: oscript-component
 before_build:

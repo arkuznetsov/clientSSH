@@ -2,31 +2,44 @@
 
 ## SSH клиент для oscript
 
+### Пример использования для ssh 
 
-# Как создать компонент для Односкрипта
+```bsl
+#Использовать clientSSH
+    
+КлиентSSH = Новый КлиентSSH("127.0.0.1", 22, "user", "password");
+Соединение = КлиентSSH.ПолучитьСоединение();
+Результат = Соединение.ВыполнитьКоманду("echo 123");   
+    
+Соединение.Разорвать();
 
-1.  Создаём новый проект-библиотеку
-2.  Подключаем NuGet пакет "OneScript runtime core" и "OneScript Main Client Libraries".
-    Первый подключать обязательно, второй подключается для возможности использования
-    встроенных типов Массив, ТаблицаЗначений и т.д.
-3.  Подключаем модули:
-        
-        using ScriptEngine.Machine.Contexts;
-        using ScriptEngine.Machine;
-        using ScriptEngine.HostedScript.Library; // только если подключили OneScript Main Client Libraries
-        
-4.  Ставим на класс пометку `[ContextClass("МойКласс", "MyClass")]` и добавляем классу наследование от `AutoContext<MyClass>`
-5.  Прописываем в класс конструктор
+```
 
-        [ScriptConstructor]
-        public static IRuntimeContextInstance Constructor()
-        {
-            return new MyClass();
-        }
+### Пример использования для конфигуратора в режиме Агента 
 
-6.  После чего в коде можно использовать вызов вида
-
-        ПодключитьВнешнююКомпоненту("oscript-component/bin/Debug/oscript-component.dll");
-        ОбъектМоегоКласса = Новый МойКласс;
+Запустить конфигуратор в режиме агента:  
+`
+1cv8.exe DESIGNER /F"<ПутьКБазе>" /AgentMode /Visible /AgentSSHHostKeyAuto /AgentBaseDir "<ПутьКПапкеВыгрузки>"
+`
 
 
+```bsl
+#Использовать clientSSH
+
+КлиентSSH = Новый КлиентSSH("127.0.0.1", 1543, "admin", "");
+Поток = КлиентSSH.ПолучитьПоток();
+// Обязательно иначе вешается
+Результат = Поток.ЗаписатьВПоток("options set --show-prompt=no --output-format=json");
+Результат = Поток.ЗаписатьВПоток("common connect-ib");
+Результат = Поток.ЗаписатьВПоток("config dump-config-to-files --dir .");
+Результат = Поток.ЗаписатьВПоток("common disconnect-ib");
+
+Поток.Разорвать();
+
+```
+
+## Известные проблемы:
+* Вешается поток если не передать:  
+ `Поток.ЗаписатьВПоток("options set --show-prompt=no --output-format=json");`  
+ * В папке выгрузки создается подпапка с именем пользователя
+ 

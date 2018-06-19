@@ -35,7 +35,7 @@ namespace oscriptcomponent
         public Stream CreateStream()
         {
 
-            var sclient = new SshClient(_host, _port, _user, _pass);
+            var sclient = getSshClient();
             
             return new Stream(sclient);
         }
@@ -48,22 +48,25 @@ namespace oscriptcomponent
         public Connection Create()
         {
 
-            if (_keyFileIsset)
-            {
+            var sclient  = getSshClient();
+            return new Connection(sclient);
             
-                var sclient  = new SshClient(_host, _port, _user, _keyfile);
-                return new Connection(sclient);
-               
-            }
-            else
-            {
-                var sclient = new SshClient(_host, _port, _user, _pass); 
-                return new Connection(sclient);
-            }
-
             
         }
 
+        /// <summary>
+        /// Получить SCP
+        /// </summary>
+        [ContextMethod("ПолучитьSCP")]
+        public Scp CreateScp()
+        {
+
+            var scpclient  = new SftpClient(_host, _port, _user, _pass);
+            return new Scp(scpclient);
+            
+        }
+
+        
         
         /// <summary>
         /// Установить ключ
@@ -87,5 +90,26 @@ namespace oscriptcomponent
         {
             return new ClientSsh(host.AsString(), (int) port.AsNumber() , user.AsString(), pass.AsString());
         }
+
+        private SshClient getSshClient()
+        {
+            
+            if (_keyFileIsset)
+            {
+            
+                var sclient  = new SshClient(_host, _port, _user, _keyfile);
+                return sclient;
+               
+            }
+            else
+            {
+                var sclient = new SshClient(_host, _port, _user, _pass); 
+                return sclient;
+            }
+
+            
+        }
+
+
     }
 }

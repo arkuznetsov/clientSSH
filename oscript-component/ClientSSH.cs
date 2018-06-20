@@ -61,9 +61,19 @@ namespace oscriptcomponent
         public Scp CreateScp()
         {
 
-            var scpclient  = new SftpClient(_host, _port, _user, _pass);
-            return new Scp(scpclient);
+            if (_keyFileIsset)
+            {
             
+                var scplient  = new SftpClient(_host, _port, _user, _keyfile);
+                return new Scp(scplient);
+               
+            }
+            else
+            {
+                var scplient = new SftpClient(_host, _port, _user, _pass); 
+                return new Scp(scplient);
+            }
+          
         }
 
         

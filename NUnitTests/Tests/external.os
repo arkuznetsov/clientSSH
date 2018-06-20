@@ -134,6 +134,17 @@
     Scp.ОтправитьФайл("C:\DEVELOP\Oscript\oscript-ssh\.ssh\testfile", "./testfile");
     
     Scp.Разорвать();
+  
+  
+    Либа = Новый КлиентSSH("127.0.0.1", 2222, "user", "");
+    Либа.УстановитьКлюч("C:\DEVELOP\Oscript\oscript-ssh\.ssh\testkey", "");
+    Scp = Либа.ПолучитьScp();
+          
+    юТест.ПроверитьРавенство(ТипЗнч(Scp), Тип("СоединениеSCP"), "Не получилось scp"); 
+    Scp.ОтправитьФайл("C:\DEVELOP\Oscript\oscript-ssh\.ssh\testfile", "./testfile");
+      
+    Scp.Разорвать();
+  
     
     Либа = Новый КлиентSSH("127.0.0.1", 1543, "admin", "");
     Scp = Либа.ПолучитьScp();

@@ -1,6 +1,6 @@
 Описание
 	.Имя("ClientSSH")
-	.Версия("0.4.1")
+	.Версия("0.4.2")
 	.Автор("a.sosnoviy aka lab")
 	.АдресАвтора("int-it@yandex.ru")
 	.Описание("ssh client для oscript")

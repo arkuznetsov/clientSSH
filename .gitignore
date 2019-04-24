@@ -14,3 +14,8 @@ packages/
 TestApp/bin/
 
 TestApp/obj/
+/.vs/oscript-component/v15/Server/sqlite3/db.lock
+/.vs/oscript-component/v15/Server/sqlite3/storage.ide
+/.vs/oscript-component/v15/Server/sqlite3/storage.ide-shm
+/.vs/oscript-component/v15/Server/sqlite3/storage.ide-wal
+/.vs/oscript-component/v15/.suo

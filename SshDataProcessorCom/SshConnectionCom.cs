@@ -29,7 +29,6 @@ namespace SshDataProcessorCom
     public class SshConnectionCom : SshConnectionComInterface
     {
         private readonly SshClient _sshClient;
-        private ShellStream _sshStream;
 
         public SshConnectionCom()
         {

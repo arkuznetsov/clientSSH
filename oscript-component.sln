@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2002
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oscript-component", "oscript-component\oscript-component.csproj", "{EA173D06-CCD2-45D5-A263-DC866289517A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{EFFB5754-9D8D-4014-A5A4-6BFFCFBA0F80}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTests", "NUnitTests\NUnitTests.csproj", "{9A739C32-D551-43B0-920A-D9C53367BC38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SshDataProcessor", "SshDataProcessor\SshDataProcessor.csproj", "{2F835244-2536-450C-8EB6-300E13CFBDFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,5 +29,15 @@ Global
 		{9A739C32-D551-43B0-920A-D9C53367BC38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A739C32-D551-43B0-920A-D9C53367BC38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A739C32-D551-43B0-920A-D9C53367BC38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F835244-2536-450C-8EB6-300E13CFBDFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F835244-2536-450C-8EB6-300E13CFBDFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F835244-2536-450C-8EB6-300E13CFBDFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F835244-2536-450C-8EB6-300E13CFBDFC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50D3207A-FF2E-4CBC-BF53-17C02C509CD2}
 	EndGlobalSection
 EndGlobal

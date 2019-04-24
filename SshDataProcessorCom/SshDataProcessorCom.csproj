@@ -37,10 +37,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CoreTechs.Sftp.Client, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CoreTechs.Sftp.Client.1.0.0.3\lib\net45\CoreTechs.Sftp.Client.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>SignedBinaries\CoreTechs.Sftp.Client.dll</HintPath>
     </Reference>
     <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
-      <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>SignedBinaries\Renci.SshNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -62,6 +64,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="SshDataProcessorCom.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SignedBinaries\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

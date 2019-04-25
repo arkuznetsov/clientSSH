@@ -65,8 +65,9 @@
     <None Include="packages.config" />
     <None Include="SshDataProcessorCom.snk" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="SignedBinaries\" />
+    <Content Include="SignedBinaries\readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

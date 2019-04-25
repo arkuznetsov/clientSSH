@@ -12,7 +12,7 @@ using oscriptcomponent;
 namespace SshClientFabric
 {
     // Это класс менеджера обработки
-    [ContextClass("ФабрикаКлиентSSH", "SSHClientFabric")]
+    [ContextClass("ФункцииКлиентSSH", "SSHClientFunctions")]
     public class SshClientFabricDataProcessorManager : AutoContext<SshClientFabricDataProcessorManager>
     {
         public SshClientFabricDataProcessorManager()

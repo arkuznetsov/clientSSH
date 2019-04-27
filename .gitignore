@@ -19,7 +19,7 @@ TestApp/obj/
 *.ide-shm
 *.ide-wal
 *.suo
-/SshDataProcessor/obj/
+SshDataProcessor/obj/
 /SshDataProcessor/bin/
-/SshDataProcessorCom/obj/
+SshDataProcessorCom/obj/
 /SshDataProcessorCom/obj/bin/

@@ -20,7 +20,11 @@ TestApp/obj/
 *.ide-wal
 *.suo
 SshDataProcessor/obj/
-/SshDataProcessor/bin/
+SshDataProcessor/bin/
 SshDataProcessorCom/obj/
+SshDataProcessorCom/bin/
+TestSshCom/obj/
+TestSshCom/bin/
 /SshDataProcessorCom/obj/bin/
+
 SshDataProcessorCom/SignedBinaries/*.dll

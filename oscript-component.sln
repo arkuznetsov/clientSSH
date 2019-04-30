@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SshDataProcessor", "SshData
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SshDataProcessorCom", "SshDataProcessorCom\SshDataProcessorCom.csproj", "{0C394DD5-AC95-4A96-9D5D-7912C7F23B68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSshCom", "TestSshCom\TestSshCom.csproj", "{4366CBE7-2781-4D1B-80A4-F22993E659BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{0C394DD5-AC95-4A96-9D5D-7912C7F23B68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C394DD5-AC95-4A96-9D5D-7912C7F23B68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C394DD5-AC95-4A96-9D5D-7912C7F23B68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4366CBE7-2781-4D1B-80A4-F22993E659BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4366CBE7-2781-4D1B-80A4-F22993E659BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4366CBE7-2781-4D1B-80A4-F22993E659BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4366CBE7-2781-4D1B-80A4-F22993E659BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

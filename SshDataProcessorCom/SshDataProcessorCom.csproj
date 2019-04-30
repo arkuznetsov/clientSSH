@@ -64,7 +64,6 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="1Cv8\readme.txt" />
-    <Content Include="SignedBinaries\readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

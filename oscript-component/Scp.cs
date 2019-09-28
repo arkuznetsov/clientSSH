@@ -35,10 +35,10 @@ namespace oscriptcomponent
         public void UploadFile(string fileName, string dest)
         {
             
-          
-            var file = new FileStream(@fileName, FileMode.Open, FileAccess.Read);
-            
-            _sftpClient.UploadFile(file, dest);
+            using (var file = new FileStream(@fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                _sftpClient.UploadFile(file, dest);
+            }
             
         }
         
@@ -50,9 +50,11 @@ namespace oscriptcomponent
         [ContextMethod("ПолучитьФайл")]
         public void DownloadFile(string src, string dest)
         {
-            
-            var file = new FileStream(@dest, FileMode.OpenOrCreate, FileAccess.Write);
-            _sftpClient.DownloadFile(src, file);
+
+            using (var file = new FileStream(@dest, FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                _sftpClient.DownloadFile(src, file);
+            }
             
         }
         

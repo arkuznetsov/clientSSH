@@ -14,3 +14,17 @@ packages/
 TestApp/bin/
 
 TestApp/obj/
+*.lock
+*.ide
+*.ide-shm
+*.ide-wal
+*.suo
+SshDataProcessor/obj/
+SshDataProcessor/bin/
+SshDataProcessorCom/obj/
+SshDataProcessorCom/bin/
+TestSshCom/obj/
+TestSshCom/bin/
+/SshDataProcessorCom/obj/bin/
+
+SshDataProcessorCom/SignedBinaries/*.dll

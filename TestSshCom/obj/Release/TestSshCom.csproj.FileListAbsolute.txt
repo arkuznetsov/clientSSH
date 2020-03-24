@@ -1,0 +1,12 @@
+C:\Users\Administrator\Source\Repos\oscript-ssh\TestSshCom\bin\Release\TestSshCom.exe.config
+C:\Users\Administrator\Source\Repos\oscript-ssh\TestSshCom\bin\Release\TestSshCom.exe
+C:\Users\Administrator\Source\Repos\oscript-ssh\TestSshCom\bin\Release\TestSshCom.pdb
+C:\Users\Administrator\Source\Repos\oscript-ssh\TestSshCom\bin\Release\SshDataProcessorCom.dll
+C:\Users\Administrator\Source\Repos\oscript-ssh\TestSshCom\bin\Release\Renci.SshNet.dll
+C:\Users\Administrator\Source\Repos\oscript-ssh\TestSshCom\bin\Release\SshDataProcessorCom.pdb
+C:\Users\Administrator\Source\Repos\oscript-ssh\TestSshCom\bin\Release\Renci.SshNet.xml
+C:\Users\Administrator\Source\Repos\oscript-ssh\TestSshCom\obj\Release\TestSshCom.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Source\Repos\oscript-ssh\TestSshCom\obj\Release\TestSshCom.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Source\Repos\oscript-ssh\TestSshCom\obj\Release\TestSshCom.csproj.CopyComplete
+C:\Users\Administrator\Source\Repos\oscript-ssh\TestSshCom\obj\Release\TestSshCom.exe
+C:\Users\Administrator\Source\Repos\oscript-ssh\TestSshCom\obj\Release\TestSshCom.pdb

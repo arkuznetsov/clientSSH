@@ -14,17 +14,11 @@ namespace TestApp
 
 		static readonly string SCRIPT = @"// Отладочный скрипт
 // в котором уже подключена наша компонента
-Слагаемое1 = Новый Слагаемое(5);
-Слагаемое2 = Новый Слагаемое(Слагаемое1);
+Порт = 22;
 
-Складыватель = Новый Сложение;
-Складыватель.ДобавитьСлагаемое(Слагаемое1);
-Складыватель.ДобавитьСлагаемое(Слагаемое2);
-//Складыватель.ДобавитьСлагаемое('20150601');
+Клиент = Новый КлиентSSH(""localhost"", Порт, """", """");
 
-Сумма = Складыватель.Вычислить();
-
-Сообщить(""Получилось: "" + Сумма);
+Сообщить(""Ок!"");
 "
 			;
 
@@ -66,7 +60,7 @@ namespace TestApp
 			Console.WriteLine(exc.ToString());
 		}
 
-		public bool InputString(out string result, int maxLen)
+		public bool InputString(out string result, string prompt, int maxLen, bool multiline)
 		{
 			throw new NotImplementedException();
 		}

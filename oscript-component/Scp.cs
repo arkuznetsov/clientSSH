@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using ScriptEngine.Machine;
+﻿using System.IO;
 using ScriptEngine.Machine.Contexts;
 using Renci.SshNet;
  

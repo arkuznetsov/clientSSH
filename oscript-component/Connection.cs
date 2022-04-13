@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using ScriptEngine.Machine;
 using ScriptEngine.Machine.Contexts;
 using Renci.SshNet;
  
@@ -13,7 +12,6 @@ namespace oscriptcomponent
     {
   
         private readonly SshClient _sshClient;
-        private  ShellStream _sshStream;
 
         public Connection(SshClient ssh)
         {

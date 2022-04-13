@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using ScriptEngine.Machine;
 using ScriptEngine.Machine.Contexts;
 using Renci.SshNet;
  

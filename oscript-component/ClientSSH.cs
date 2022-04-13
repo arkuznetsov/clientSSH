@@ -89,12 +89,15 @@ namespace oscriptcomponent
             _keyFileIsset = true;
 
         }
-        
+
         /// <summary>
         /// Создает КлиентSSH
         /// </summary>
         /// <returns>КлиентSSH</returns>
         /// <param name="host">Хост</param>>
+        /// <param name="port">Хост</param>>
+        /// <param name="user">Хост</param>>
+        /// <param name="pass">Хост</param>>
         [ScriptConstructor]
         public static IRuntimeContextInstance Constructor(IValue host, IValue port, IValue user, IValue pass)
         {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using NUnit.Framework;
 using ScriptEngine.Machine.Contexts;
 using ScriptEngine.HostedScript.Library;
 using ScriptEngine.Machine;
@@ -45,7 +44,7 @@ namespace NUnitTests
 			engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(EngineHelpWrapper)));
 
 			var testrunnerSource = LoadFromAssemblyResource("NUnitTests.Tests.testrunner.os");
-			var testrunnerModule = engine.GetCompilerService().CreateModule(testrunnerSource);
+			var testrunnerModule = engine.GetCompilerService().Compile(testrunnerSource);
 			
 			{
 				var mi = engine.GetType().GetMethod("SetGlobalEnvironment",
@@ -56,7 +55,7 @@ namespace NUnitTests
 			engine.LoadUserScript(new ScriptEngine.UserAddedScript()
 			{
 				Type = ScriptEngine.UserAddedScriptType.Class,
-				Module = testrunnerModule,
+				Image = testrunnerModule,
 				Symbol = "TestRunner"
 			});
 
@@ -66,15 +65,16 @@ namespace NUnitTests
 			return engine;
 		}
 
-		public void RunTestScript(string resourceName)
+        [Obsolete]
+        public void RunTestScript(string resourceName)
 		{
 			var source = LoadFromAssemblyResource(resourceName);
-			var module = engine.GetCompilerService().CreateModule(source);
+			var module = engine.GetCompilerService().Compile(source);
 
 			engine.LoadUserScript(new ScriptEngine.UserAddedScript()
 			{
 				Type = ScriptEngine.UserAddedScriptType.Class,
-				Module = module,
+				Image = module,
 				Symbol = resourceName
 			});
 
@@ -130,7 +130,7 @@ namespace NUnitTests
 			return new string[] { };
 		}
 
-		public bool InputString(out string result, int maxLen)
+		public bool InputString(out string result, string prompt, int maxLen, bool multiline)
 		{
 			result = "";
 			return false;

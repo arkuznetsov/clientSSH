@@ -1,0 +1,8 @@
+services:
+ sftp:
+    image: onescript-ssh/test-ssh
+    build: .
+    volumes:
+        - ./upload:/root/upload
+    ports:
+        - "2222:22"

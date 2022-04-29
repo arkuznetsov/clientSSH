@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using oscriptcomponent;
 
 // Используется NUnit 3.6

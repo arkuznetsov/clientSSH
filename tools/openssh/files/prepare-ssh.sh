@@ -1,9 +1,14 @@
 #!/bin/bash
 
-passwd root <<EOF
-P@ssw0rd
-P@ssw0rd
+# Create user if needed
+getent passwd ${SSH_TEST_USER} > /dev/null
+if [ $? != 0 ]; then
+    useradd -m -s /bin/bash ${SSH_TEST_USER}
+    passwd ${SSH_TEST_USER} <<EOF
+${SSH_TEST_PWD}
+${SSH_TEST_PWD}
 EOF
+fi
 
 # Generate unique ssh keys for this container, if needed
 if [ ! -f /etc/ssh/id_key ]; then
@@ -13,6 +18,6 @@ fi
 # Restrict access from other users
 chmod 600 /etc/ssh/id_key
 
-mkdir -p /root/.ssh
-cat /tmp/sftp-key.pub >> /root/.ssh/authorized_keys
-chmod -R 700 /root/.ssh && chmod -R 600 /root/.ssh/*
+mkdir -p /home/${SSH_TEST_USER}/.ssh
+cat /tmp/sftp-key.pub >> /home/${SSH_TEST_USER}/.ssh/authorized_keys
+chmod -R 700 /home/${SSH_TEST_USER}/.ssh && chmod -R 600 /home/${SSH_TEST_USER}/.ssh/*

@@ -1,5 +1,10 @@
 FROM debian:bullseye
 
+ARG SSH_TEST_USER=user
+ARG SSH_TEST_PWD=P@ssw0rd
+ENV SSH_TEST_USER=${SSH_TEST_USER}
+ENV SSH_TEST_PWD=${SSH_TEST_PWD}
+
 COPY files/sshd_config /etc/ssh/sshd_config
 COPY files/prepare-ssh.sh /tmp/
 COPY files/sftp-key.pub /tmp/

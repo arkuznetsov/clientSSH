@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard2.1</TargetFrameworks>
+    <Configurations>Debug;Release</Configurations>
+    <Platforms>AnyCPU</Platforms>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\oscript-component\oscript-component.csproj">
+      <Project>{EA173D06-CCD2-45D5-A263-DC866289517A}</Project>
+      <Name>oscript-component</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tests\testrunner.os" />
+    <EmbeddedResource Include="Tests\external.os" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.6.1" />
+  </ItemGroup>
+</Project>

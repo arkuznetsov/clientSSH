@@ -20,7 +20,7 @@ namespace TestApp
 
 Сообщить(""Ок!"");
 "
-			;
+		;
 
 		public static HostedScriptEngine StartEngine()
 		{

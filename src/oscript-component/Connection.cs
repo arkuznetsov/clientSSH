@@ -1,4 +1,12 @@
-﻿using System.Text;
+﻿/*----------------------------------------------------------
+Use of this source code is governed by an MIT-style
+license that can be found in the LICENSE file or at
+https://opensource.org/licenses/MIT.
+----------------------------------------------------------
+// Codebase: https://github.com/ArKuznetsov/oscript-ssh/
+----------------------------------------------------------*/
+
+using System.Text;
 using ScriptEngine.Machine.Contexts;
 using Renci.SshNet;
  

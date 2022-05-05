@@ -11,3 +11,4 @@ test/
 build/bin/
 *.ospx
 map.json
+tools/nuget.exe

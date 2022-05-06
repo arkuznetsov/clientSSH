@@ -8,6 +8,7 @@ https://opensource.org/licenses/MIT.
 
 using System.IO;
 using ScriptEngine.Machine.Contexts;
+using ScriptEngine.Machine;
 using Renci.SshNet;
  
 namespace oscriptcomponent
@@ -39,10 +40,10 @@ namespace oscriptcomponent
         /// <c>true</c> if directory or file exists; otherwise <c>false</c>.
         /// </returns>
         [ContextMethod("Существует")]
-        public bool Exists(string path)
+        public IValue Exists(string path)
         {
 
-            return _sftpClient.Exists(path);
+            return ValueFactory.Create(_sftpClient.Exists(path));
 
         }
 
@@ -54,7 +55,7 @@ namespace oscriptcomponent
         public void CreateDirectory(string path)
         {
 
-                _sftpClient.CreateDirectory(path);
+            _sftpClient.CreateDirectory(path);
 
         }
 
@@ -78,12 +79,18 @@ namespace oscriptcomponent
         /// <param name="canOwerwrite">if set to <c>true</c> then existing file will be overwritten.</param>
         /// <returns>Результат выполнения</returns>
         [ContextMethod("ОтправитьФайл")]
-        public void UploadFile(string fileName, string dest, bool canOwerwrite)
+        public void UploadFile(string fileName, string dest, IValue canOwerwrite = null)
         {
-            
             using (var file = new FileStream(@fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                _sftpClient.UploadFile(file, dest, canOwerwrite);
+                if (canOwerwrite == null)
+                {
+                    _sftpClient.UploadFile(file, dest);
+                }
+                else
+                {
+                    _sftpClient.UploadFile(file, dest, canOwerwrite.AsBoolean());
+                }
             }
             
         }

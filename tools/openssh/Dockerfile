@@ -17,6 +17,7 @@ RUN apt-get update && \
     apt-get -y install openssh-server && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /var/run/sshd && \
+    chmod +x /tmp/prepare-ssh.sh && \
     /tmp/prepare-ssh.sh
 
 EXPOSE 22

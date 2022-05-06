@@ -1,0 +1,69 @@
+# MIT License
+# Copyright (C) 2022 Artem Kuznetsov <ArKuznetsov@gmail.com> and contributors
+# All rights reserved.
+
+name: Контроль качества
+# Любой пуш и pr в проекте но с фильтром по основному проекту
+on: [push, pull_request]
+
+env:
+  # отключение безопасности установки, от 2020-10-01
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+jobs:
+  build:
+    if: github.repository == 'arkuznetsov/oscript-ssh'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+
+    steps:
+      # Загрузка проекта
+      - name: Актуализация
+        uses: actions/checkout@v2
+        with:
+          # Disabling shadow clone is recomended
+          fetch-depth: 0
+
+      # https://stackoverflow.com/questions/58033366/how-to-get-current-branch-within-github-actions
+      - name: Извлечение имени текущей ветки
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      # Установка NUnit3
+      - name: Установка NUnit3
+        run: |
+          nuget restore ./src
+          nuget install NUnit.ConsoleRunner -Version 3.6.1 -OutputDirectory ./test
+
+      # Сборка компоненты для тестирования
+      - name: Сборка компоненты для тестирования
+        run: |
+          dotnet restore ./src
+          dotnet build ./src --configuration Debug
+
+      # Сборка сборка и запуск контейнера OpenSSH
+      - name: Сборка сборка и запуск контейнера OpenSSH
+        env:
+          SSH_TEST_USER: ${{ secrets.SSH_TEST_USER }}
+          SSH_TEST_PWD: ${{ secrets.SSH_TEST_PWD }}
+        run: |
+          echo PWD: $PWD
+          mkdir -p ./tools/openssh/upload
+          chmod -R 700 ./tools/openssh/upload
+          docker-compose --file ./tools/openssh/docker-compose.yml up --build -d
+
+      # Запуск тестов NUnit3
+      - name: Запуск тестов NUnit3
+        env:
+          SSH_TEST_USER: ${{ secrets.SSH_TEST_USER }}
+          SSH_TEST_PWD: ${{ secrets.SSH_TEST_PWD }}
+        run: ./test/NUnit.ConsoleRunner.3.6.1/tools/nunit3-console.exe ./src/NUnitTests/bin/Debug/net452/NUnitTests.dll --result=./test/nunit-result.xml
+
+      - name: Извлечение версии пакета
+        shell: bash
+        run: echo "##[set-output name=version;]`cat ./build/packagedef | grep ".Версия(" | sed 's|[^"]*"||' | sed -r 's/".+//'`"
+        id: extract_version

@@ -21,3 +21,4 @@ chmod 600 /etc/ssh/id_key
 mkdir -p /home/${SSH_TEST_USER}/.ssh
 cat /tmp/sftp-key.pub >> /home/${SSH_TEST_USER}/.ssh/authorized_keys
 chmod -R 700 /home/${SSH_TEST_USER}/.ssh && chmod -R 600 /home/${SSH_TEST_USER}/.ssh/*
+chown -R ${SSH_TEST_USER} /home/${SSH_TEST_USER}/.ssh

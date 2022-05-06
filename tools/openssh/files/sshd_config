@@ -5,7 +5,7 @@ HostKey /etc/ssh/id_key
 
 # Limited access
 PubkeyAuthentication yes
-PermitRootLogin yes
+PermitRootLogin no
 X11Forwarding no
 AllowTcpForwarding yes
 #PermitRootLogin without-password

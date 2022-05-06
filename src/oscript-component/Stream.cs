@@ -82,7 +82,7 @@ namespace oscriptcomponent
         /// <summary>
         /// Закрыть соединение
         /// </summary>
-        [ContextMethod("Разорвать")]
+        [ContextMethod("Отключиться")]
         public void DisconnectStream()
         {
     

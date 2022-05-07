@@ -9,8 +9,10 @@ https://opensource.org/licenses/MIT.
 using System.IO;
 using ScriptEngine.Machine.Contexts;
 using ScriptEngine.Machine;
+using ScriptEngine.HostedScript.Library;
 using Renci.SshNet;
- 
+using Renci.SshNet.Sftp;
+
 namespace oscriptcomponent
 {
     /// <summary>
@@ -33,11 +35,11 @@ namespace oscriptcomponent
         }
 
         /// <summary>
-        /// Создать каталог
+        /// Существует
         /// </summary>
-        /// <param name="path">Path to file or directory.</param>
+        /// <param name="path">Путь к файлу или каталогу</param>
         /// <returns>
-        /// <c>true</c> if directory or file exists; otherwise <c>false</c>.
+        /// <c>true</c> если файл или каталог существует; в противном случае <c>false</c>.
         /// </returns>
         [ContextMethod("Существует")]
         public IValue Exists(string path)
@@ -48,9 +50,50 @@ namespace oscriptcomponent
         }
 
         /// <summary>
+        /// Содержимое каталога
+        /// </summary>
+        /// <param name="path">Путь к каталогу</param>
+        /// <returns>
+        /// <c>Соответствие</c> - Список файлов и каталогов в указанном каталоге.</returns>
+        /// <c>Ключ</c> - Имя файла / каталога
+        /// <c>Значение</c> - <c>Структура</c> - описание файла / каталога
+        /// <c>Имя</c> - имя файла
+        /// <c>ПолноеИмя</c> - полный путь к файлу
+        /// <c>ЭтоФайл</c> - это файл
+        /// <c>ЭтоКаталог</c> - это каталог
+        /// </returns>
+        [ContextMethod("СодержимоеКаталога")]
+        public IValue ListDirectory(string path)
+        {
+
+            var SrcList = _sftpClient.ListDirectory(path);
+
+            MapImpl ResultList = new MapImpl();
+
+            IValue ResultItemKey;
+            StructureImpl ResultItemValue;
+
+            foreach (SftpFile item in SrcList)
+            {
+                ResultItemKey = ValueFactory.Create(item.Name);
+
+                ResultItemValue = new StructureImpl();
+                ResultItemValue.Insert("Имя", ValueFactory.Create(item.Name));
+                ResultItemValue.Insert("ПолноеИмя", ValueFactory.Create(item.FullName));
+                ResultItemValue.Insert("ЭтоФайл", ValueFactory.Create(item.IsRegularFile));
+                ResultItemValue.Insert("ЭтоКаталог", ValueFactory.Create(item.IsDirectory));
+                ResultItemValue.Insert("Размер", ValueFactory.Create(item.Length));
+
+                ResultList.Insert(ResultItemKey, ResultItemValue);
+            }
+            return ValueFactory.Create(ResultList);
+
+        }
+
+        /// <summary>
         /// Создать каталог
         /// </summary>
-        /// <param name="path">Path to new directory.</param>
+        /// <param name="path">Путь к новому каталогу.</param>
         [ContextMethod("СоздатьКаталог")]
         public void CreateDirectory(string path)
         {
@@ -62,7 +105,7 @@ namespace oscriptcomponent
         /// <summary>
         /// Удалить каталог
         /// </summary>
-        /// <param name="path">Path to directory to delete.</param>
+        /// <param name="path">Путь к удаляемому каталогу.</param>
         [ContextMethod("УдалитьКаталог")]
         public void DeleteDirectory(string path)
         {
@@ -74,10 +117,9 @@ namespace oscriptcomponent
         /// <summary>
         /// Отправить Файл
         /// </summary>
-        /// <param name="fileName">File path.</param>
-        /// <param name="dest">Remote file path.</param>
-        /// <param name="canOwerwrite">if set to <c>true</c> then existing file will be overwritten.</param>
-        /// <returns>Результат выполнения</returns>
+        /// <param name="fileName">Путь к отправляемому файлу.</param>
+        /// <param name="dest">Путь к файлу на сервере.</param>
+        /// <param name="canOwerwrite">если указано <c>true</c>, то существующий файл на сервере будет перезаписан.</param>
         [ContextMethod("ОтправитьФайл")]
         public void UploadFile(string fileName, string dest, IValue canOwerwrite = null)
         {
@@ -94,11 +136,12 @@ namespace oscriptcomponent
             }
             
         }
-     
+
         /// <summary>
         /// Получить Файл
         /// </summary>
-        /// <returns>Результат выполнения</returns>
+        /// <param name="src">Путь к файлу на сервере.</param>
+        /// <param name="dest">Путь для загрузки файла.</param>
         [ContextMethod("ПолучитьФайл")]
         public void DownloadFile(string src, string dest)
         {
@@ -113,7 +156,7 @@ namespace oscriptcomponent
         /// <summary>
         /// Удалить файл
         /// </summary>
-        /// <param name="path">Path to file to delete.</param>
+        /// <param name="path">Путь к файлу для удаления.</param>
         [ContextMethod("УдалитьФайл")]
         public void DeleteFile(string path)
         {

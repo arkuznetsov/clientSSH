@@ -45,8 +45,8 @@ jobs:
           dotnet restore ./src
           dotnet build ./src --configuration Debug
 
-      # Сборка сборка и запуск контейнера OpenSSH
-      - name: Сборка сборка и запуск контейнера OpenSSH
+      # Сборка и запуск контейнера OpenSSH
+      - name: Сборка и запуск контейнера OpenSSH
         env:
           SSH_TEST_USER: ${{ secrets.SSH_TEST_USER }}
           SSH_TEST_PWD: ${{ secrets.SSH_TEST_PWD }}
@@ -57,11 +57,13 @@ jobs:
           docker-compose --file ./tools/openssh/docker-compose.yml up --build -d
 
       # Запуск тестов NUnit3
-      - name: Запуск тестов NUnit3
+      - name: Запуск тестов NUnit3 и сборка покрытия
         env:
           SSH_TEST_USER: ${{ secrets.SSH_TEST_USER }}
           SSH_TEST_PWD: ${{ secrets.SSH_TEST_PWD }}
-        run: ./test/NUnit.ConsoleRunner.3.6.1/tools/nunit3-console.exe ./src/NUnitTests/bin/Debug/net452/NUnitTests.dll --result=./test/nunit-result.xml
+        run: |
+          dotnet tool install --global dotnet-coverage
+          dotnet-coverage collect -o ./test/coverage.xml -f xml "./test/NUnit.ConsoleRunner.3.6.1/tools/nunit3-console.exe ./src/NUnitTests/bin/Debug/net452/NUnitTests.dll --result=./test/nunit-result.xml"
 
       - name: Извлечение версии пакета
         shell: bash

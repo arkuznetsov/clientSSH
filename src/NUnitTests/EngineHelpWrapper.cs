@@ -101,10 +101,19 @@ namespace NUnitTests
 			foreach (var ivTestName in testArray)
 			{
 				string testName = ivTestName.AsString();
-				int methodIndex = test.FindMethod(testName);
+				int methodIndex;
+				try
+				{
+					methodIndex = test.FindMethod(testName);
+				} catch
+                {
+					methodIndex = -1;
+				}
+
 				if (methodIndex == -1)
 				{
 					// Тест указан, но процедуры нет или она не экспортирована
+					Console.WriteLine("Тест: {0} не реализован!", testName);
 					continue;
 				}
 

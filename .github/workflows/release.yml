@@ -56,15 +56,15 @@ jobs:
           dotnet restore ./src
           dotnet msbuild ./src -property:Configuration=Release
           mkdir ./build/bin/
-          cp -f ./src/oscript-component/bin/Release/net452/*.dll ./build/bin/
-          cp -f ./src/oscript-component/bin/Release/net452/*.xml ./build/bin/
+          cp -f ./src/oscript-ssh/bin/Release/net452/*.dll ./build/bin/
+          cp -f ./src/oscript-ssh/bin/Release/net452/*.xml ./build/bin/
           rm -f ./build/bin/OneScript*.* ./build/bin/ScriptEngine*.* ./build/bin/NewtonSoft*.* ./build/bin/DotNetZip*.*
 
       # Генерация документации
       - name: Генерация документации
         run: |
           chmod +x ./build/OneScriptDocumenter/OneScriptDocumenter.exe
-          ./build/OneScriptDocumenter/OneScriptDocumenter.exe json ./build/bin/syntaxHelp.json ./src/oscript-component/bin/Release/net452/oscript-component.dll
+          ./build/OneScriptDocumenter/OneScriptDocumenter.exe json ./build/bin/syntaxHelp.json ./src/oscript-ssh/bin/Release/net452/oscript-ssh.dll
 
       # Сборка пакета OneScript
       - name: Сборка пакета

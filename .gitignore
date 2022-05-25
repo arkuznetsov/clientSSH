@@ -3,8 +3,8 @@
 \.vscode/
 src/NUnitTests/bin/
 src/NUnitTests/obj/
-src/oscript-component/bin/
-src/oscript-component/obj/
+src/oscript-ssh/bin/
+src/oscript-ssh/obj/
 src/TestApp/bin/
 src/TestApp/obj/
 test/

@@ -9,9 +9,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\oscript-component\oscript-component.csproj">
-      <Project>{EA173D06-CCD2-45D5-A263-DC866289517A}</Project>
-      <Name>oscript-component</Name>
+    <ProjectReference Include="..\oscript-ssh\oscript-ssh.csproj">
+      <Project>{D0415022-7655-4764-BFD8-D5E0616C2BB2}</Project>
+      <Name>oscript-ssh</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@
 	.Автор("a.sosnoviy aka lab; Artem Kuznetsov")
 	.АдресАвтора("int-it@yandex.ru; ArKuznetsov@gmail.com")
 	.Описание("ssh client для oscript")
-	.ВерсияСреды("1.7")
+	.ВерсияСреды("1.6")
 	.ВключитьФайл("bin")
 	.ВключитьФайл("package-loader.os")
 	.ВключитьФайл("../README.md")

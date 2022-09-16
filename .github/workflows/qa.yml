@@ -9,6 +9,8 @@ on: [push, pull_request]
 env:
   # отключение безопасности установки, от 2020-10-01
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+  PROJECT_KEY: "clientSSH"
 
 jobs:
   build:
@@ -17,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        os: [clientSSH]
 
     steps:
       # Загрузка проекта
@@ -27,23 +29,19 @@ jobs:
           # Disabling shadow clone is recomended
           fetch-depth: 0
 
-      # https://stackoverflow.com/questions/58033366/how-to-get-current-branch-within-github-actions
-      - name: Извлечение имени текущей ветки
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
-
       # Установка NUnit3
       - name: Установка NUnit3
+        shell: pwsh
         run: |
-          nuget restore ./src
-          nuget install NUnit.ConsoleRunner -Version 3.6.1 -OutputDirectory ./test
+          curl -o "./tools/nuget.exe" https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+          ./tools/nuget.exe restore ./src
+          ./tools/nuget.exe install NUnit.ConsoleRunner -Version 3.6.1 -OutputDirectory ./tools
 
-      # Сборка компоненты для тестирования
-      - name: Сборка компоненты для тестирования
+      # Установка инструментов .NET
+      - name: Установка инструментов .NET
         run: |
-          dotnet restore ./src
-          dotnet build ./src --configuration Debug
+          dotnet tool update --global dotnet-sonarscanner
+          dotnet tool update --global dotnet-coverage
 
       # Сборка и запуск контейнера OpenSSH
       - name: Сборка и запуск контейнера OpenSSH
@@ -56,16 +54,60 @@ jobs:
           chmod -R 700 ./tools/openssh/upload
           docker-compose --file ./tools/openssh/docker-compose.yml up --build -d
 
+      # Извлечение версии пакета
+      - name: Получение packagedef
+        shell: pwsh
+        run: echo "::set-output name=data::$(type ./build/packagedef)\n"
+        id: packagedef_data
+
+      - name: Извлечение версии пакета
+        uses: actions-ecosystem/action-regex-match@v2
+        with:
+          text: ${{ steps.packagedef_data.outputs.data }}
+          regex: '.Версия\("((?:\d+\.)+\d+)"\)'
+        id: extract_version
+
+      # Начало анализа проекта в SonarQube (ветка)
+      - name: Начало анализа проекта в SonarQube (branch)
+        if: github.event_name == 'push'
+        run: dotnet sonarscanner begin
+            /s:${{ github.workspace }}/SonarQube.Analysis.xml
+            /k:${{ env.PROJECT_KEY }}
+            /v:${{ steps.extract_version.outputs.group1 }}
+            /d:sonar.host.url="${{ secrets.SONARQUBE_HOST }}"
+            /d:sonar.login="${{ secrets.SONARQUBE_TOKEN }}"
+            /d:sonar.branch.name="${{ env.BRANCH_NAME }}"
+
+      # Начало анализа проекта в SonarQube (PR)
+      # https://docs.sonarqube.org/latest/analysis/pull-request/
+      - name: Начало анализа проекта в SonarQube (pull-request)
+        if: github.event_name == 'pull_request'
+        run: dotnet sonarscanner begin
+            /s:${{ github.workspace }}/SonarQube.Analysis.xml
+            /k:${{ env.PROJECT_KEY }}
+            /d:sonar.host.url="${{ secrets.SONARQUBE_HOST }}"
+            /d:sonar.login="${{ secrets.SONARQUBE_TOKEN }}"
+            /d:sonar.branch.name="${{ env.BRANCH_NAME }}"
+            /d:sonar.pullrequest.key=${{ github.event.pull_request.number }}
+            /d:sonar.pullrequest.branch=${{ github.event.pull_request.head.ref }}
+            /d:sonar.pullrequest.base=${{ github.event.pull_request.base.ref }}
+            /d:sonar.scm.revision=${{ github.event.pull_request.head.sha }}
+
+      # Сборка компоненты для тестирования
+      - name: Сборка компоненты для тестирования
+        run: |
+          dotnet restore ./src
+          dotnet build ./src --configuration Debug
+
       # Запуск тестов NUnit3
       - name: Запуск тестов NUnit3 и сборка покрытия
         env:
           SSH_TEST_USER: ${{ secrets.SSH_TEST_USER }}
           SSH_TEST_PWD: ${{ secrets.SSH_TEST_PWD }}
         run: |
-          dotnet tool install --global dotnet-coverage
-          dotnet-coverage collect -o ./test/coverage.xml -f xml "./test/NUnit.ConsoleRunner.3.6.1/tools/nunit3-console.exe ./src/NUnitTests/bin/Debug/net452/NUnitTests.dll --result=./test/nunit-result.xml"
+          mkdir "./build/reports"
+          dotnet-coverage collect -o ./build/reports/coverage.xml -f xml "./tools/NUnit.ConsoleRunner.3.6.1/tools/nunit3-console.exe ./src/NUnitTests/bin/Debug/net452/NUnitTests.dll --result=./build/reports/nunit-result.xml"
 
-      - name: Извлечение версии пакета
-        shell: bash
-        run: echo "##[set-output name=version;]`cat ./build/packagedef | grep ".Версия(" | sed 's|[^"]*"||' | sed -r 's/".+//'`"
-        id: extract_version
+      # Завершение анализа проекта в SonarQube
+      - name: Завершение анализа проекта в SonarQube
+        run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONARQUBE_TOKEN }}"

@@ -5,11 +5,13 @@
 name: Подготовка релиза и публикация в хабе
 # Только события создания и изменения релиза
 on:
-    release:
-        types: [published, edited]
+  release:
+    types: [published]
+  workflow_dispatch:
 
 env:
-  PACKAGE_MASK: ClientSSH-*.ospx
+  PACKAGE_MASK: clientSSH-*.ospx
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
 jobs:
   build:
@@ -17,13 +19,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        os: [clientSSH]
         oscript_version: ['1.6.0']
         
     steps:
       # Загрузка проекта
       - name: Актуализация
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       # Установка OneScript конкретной версии
       - name: Установка OneScript
@@ -39,53 +41,26 @@ jobs:
           opm install
           cd ..
 
-      # Установка зависимостей NuGet
-      - name: Установка зависимостей NuGet
-        run: nuget restore ./src
+      # Сборка проекта
+      - name: Сборка проекта
+        run: ./build/build.bat
 
-      # Скачивание и установка документатора
-      - name: Скачивание и установка документатора
-        run: |
-          wget --output-document=./build/OneScriptDocumenter.zip https://github.com/dmpas/OneScriptDocumenter/releases/download/1.0.14/documenter.zip
-          sudo apt-get install p7zip-full
-          7z x -o./build/OneScriptDocumenter -y ./build/OneScriptDocumenter.zip
-
-      # Сборка компоненты для релиза
-      - name: Сборка компоненты для релиза
-        run: |
-          dotnet restore ./src
-          dotnet msbuild ./src -property:Configuration=Release
-          mkdir ./build/bin/
-          cp -f ./src/oscript-ssh/bin/Release/net452/*.dll ./build/bin/
-          cp -f ./src/oscript-ssh/bin/Release/net452/*.xml ./build/bin/
-          rm -f ./build/bin/OneScript*.* ./build/bin/ScriptEngine*.* ./build/bin/NewtonSoft*.* ./build/bin/DotNetZip*.*
-
-      # Генерация документации
-      - name: Генерация документации
-        run: |
-          chmod +x ./build/OneScriptDocumenter/OneScriptDocumenter.exe
-          ./build/OneScriptDocumenter/OneScriptDocumenter.exe json ./build/bin/syntaxHelp.json ./src/oscript-ssh/bin/Release/net452/oscript-ssh.dll
-
-      # Сборка пакета OneScript
-      - name: Сборка пакета
-        run: opm build -o ./build ./build
-
-      # - name: Заливка артефактов
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: package.zip
-      #     path: ./build/${{ env.PACKAGE_MASK }}
+      # Заливка артефактов
+      - name: Заливка артефактов
+        uses: actions/upload-artifact@v2
+        with:
+          name: package.zip
+          path: ./build/${{ env.PACKAGE_MASK }}
 
       # Заливка в релиз
-      # - name: Заливка в релиз
-      #   uses: AButler/upload-release-assets@v1.0
-      #   with:
-      #     files: ./build/${{ env.PACKAGE_MASK }}
-      #     repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Заливка в релиз
+        uses: AButler/upload-release-assets@v1.0
+        with:
+          files: ./build/${{ env.PACKAGE_MASK }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       # Публикация в hub.oscript.io
-      # - name: Публикация в hub.oscript.io
-      #   shell: bash
-      #   run: opm push -f ./build/${{ env.PACKAGE_MASK }} --token ${{ env.TOKEN }} -c stable
-      #   env:
-      #     TOKEN: ${{ secrets.OSHUB_TOKEN }}
+      - name: Публикация в hub.oscript.io
+        run: opm push -f ./build/${{ env.PACKAGE_MASK }} --token ${{ env.TOKEN }} -c stable
+        env:
+          TOKEN: ${{ secrets.OSHUB_TOKEN }}

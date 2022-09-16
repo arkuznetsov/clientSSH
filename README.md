@@ -1,14 +1,14 @@
 # Oscript SSH client 
 
-[![GitHub release](https://img.shields.io/github/release/ArKuznetsov/oscript-ssh.svg?style=flat-square)](https://github.com/ArKuznetsov/oscript-ssh/releases)
-[![GitHub license](https://img.shields.io/github/license/ArKuznetsov/oscript-ssh.svg?style=flat-square)](https://github.com/ArKuznetsov/oscript-ssh/blob/develop/LICENSE)
-[![GitHub Releases](https://img.shields.io/github/downloads/ArKuznetsov/oscript-ssh/latest/total?style=flat-square)](https://github.com/ArKuznetsov/oscript-ssh/releases)
-[![GitHub All Releases](https://img.shields.io/github/downloads/ArKuznetsov/oscript-ssh/total?style=flat-square)](https://github.com/ArKuznetsov/oscript-ssh/releases)
+[![GitHub release](https://img.shields.io/github/release/ArKuznetsov/clientSSH.svg?style=flat-square)](https://github.com/ArKuznetsov/clientSSH/releases)
+[![GitHub license](https://img.shields.io/github/license/ArKuznetsov/clientSSH.svg?style=flat-square)](https://github.com/ArKuznetsov/clientSSH/blob/develop/LICENSE)
+[![GitHub Releases](https://img.shields.io/github/downloads/ArKuznetsov/clientSSH/latest/total?style=flat-square)](https://github.com/ArKuznetsov/clientSSH/releases)
+[![GitHub All Releases](https://img.shields.io/github/downloads/ArKuznetsov/clientSSH/total?style=flat-square)](https://github.com/ArKuznetsov/clientSSH/releases)
 
-[![Build Status](https://img.shields.io/github/workflow/status/ArKuznetsov/oscript-ssh/%D0%9A%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D1%8C%20%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B0)](https://github.com/arkuznetsov/oscript-ssh/actions/)
-[![Quality Gate](https://open.checkbsl.org/api/project_badges/measure?project=oscript-ssh&metric=alert_status)](https://open.checkbsl.org/dashboard/index/oscript-ssh)
-[![Coverage](https://open.checkbsl.org/api/project_badges/measure?project=oscript-ssh&metric=coverage)](https://open.checkbsl.org/dashboard/index/oscript-ssh)
-[![Tech debt](https://open.checkbsl.org/api/project_badges/measure?project=oscript-ssh&metric=sqale_index)](https://open.checkbsl.org/dashboard/index/oscript-ssh)
+[![Build Status](https://img.shields.io/github/workflow/status/ArKuznetsov/clientSSH/%D0%9A%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D1%8C%20%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B0)](https://github.com/arkuznetsov/clientSSH/actions/)
+[![Quality Gate](https://open.checkbsl.org/api/project_badges/measure?project=clientSSH&metric=alert_status)](https://open.checkbsl.org/dashboard/index/clientSSH)
+[![Coverage](https://open.checkbsl.org/api/project_badges/measure?project=clientSSH&metric=coverage)](https://open.checkbsl.org/dashboard/index/clientSSH)
+[![Tech debt](https://open.checkbsl.org/api/project_badges/measure?project=clientSSH&metric=sqale_index)](https://open.checkbsl.org/dashboard/index/clientSSH)
 
 ## SSH клиент для oscript
 

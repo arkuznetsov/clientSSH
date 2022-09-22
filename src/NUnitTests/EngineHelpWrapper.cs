@@ -43,7 +43,7 @@ namespace NUnitTests
 
 			// Тут можно указать любой класс из компоненты
 			// Если проектов компонент несколько, то надо взять по классу из каждой из них
-			engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(oscriptcomponent.JSONDataExtractor)));
+			engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(oscriptcomponent.ClientSsh)));
 
 			// Подключаем тестовую оболочку
 			engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(EngineHelpWrapper)));

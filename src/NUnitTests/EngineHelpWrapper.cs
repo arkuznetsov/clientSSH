@@ -42,11 +42,8 @@ namespace NUnitTests
 			engine.Initialize();
 
 			// Тут можно указать любой класс из компоненты
-			engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(oscriptcomponent.ClientSsh)));
-
 			// Если проектов компонент несколько, то надо взять по классу из каждой из них
-			// engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(oscriptcomponent_2.MyClass_2)));
-			// engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(oscriptcomponent_3.MyClass_3)));
+			engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(oscriptcomponent.JSONDataExtractor)));
 
 			// Подключаем тестовую оболочку
 			engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(EngineHelpWrapper)));
@@ -73,8 +70,42 @@ namespace NUnitTests
 			return engine;
 		}
 
-        [Obsolete]
-        public void RunTestScript(string resourceName)
+		public void RunTestScript(string resourceName)
+		{
+
+			ArrayImpl testArray = GetTestMethods(resourceName);
+
+			Console.WriteLine("Всего тестов: {0}", testArray.Count());
+
+			int testResult;
+			string testException;
+
+			foreach (var ivTestName in testArray)
+			{
+				string testName = ivTestName.AsString();
+
+				Console.WriteLine("Скрипт: {0}, тест: {1}", resourceName, testName);
+
+				testResult = RunTestMethod(resourceName, testName, out testException);
+				switch (testResult)
+				{
+					case -1:
+						Console.WriteLine("Тест: {0} не реализован!", testName);
+						break;
+					case 0:
+						Console.WriteLine("Тест: {0} пройден!", testName);
+						break;
+					case 1:
+						Console.WriteLine("Тест: {0} провален с сообщением: {1}", testName, testException);
+						break;
+					default:
+						Console.WriteLine("Тест: {0} вернул неожиданный результат: {1}", testName, testResult);
+						break;
+				}
+			}
+		}
+
+		public ArrayImpl GetTestMethods(string resourceName)
 		{
 			var source = LoadFromAssemblyResource(resourceName);
 			var module = engine.GetCompilerService().Compile(source);
@@ -98,27 +129,48 @@ namespace NUnitTests
 				}
 			}
 
-			foreach (var ivTestName in testArray)
+			return testArray;
+		}
+
+		public int RunTestMethod(string resourceName, string methodName, out string testException)
+		{
+			testException = "";
+
+			var source = LoadFromAssemblyResource(resourceName);
+			var module = engine.GetCompilerService().Compile(source);
+
+			engine.LoadUserScript(new ScriptEngine.UserAddedScript()
 			{
-				string testName = ivTestName.AsString();
-				int methodIndex;
-				try
-				{
-					methodIndex = test.FindMethod(testName);
-				} catch
-                {
-					methodIndex = -1;
-				}
+				Type = ScriptEngine.UserAddedScriptType.Class,
+				Image = module,
+				Symbol = resourceName
+			});
 
-				if (methodIndex == -1)
-				{
-					// Тест указан, но процедуры нет или она не экспортирована
-					Console.WriteLine("Тест: {0} не реализован!", testName);
-					continue;
-				}
+			var test = AttachedScriptsFactory.ScriptFactory(resourceName, new IValue[] { });
 
+			int methodIndex = test.FindMethod("ПолучитьСписокТестов");
+			test.CallAsProcedure(methodIndex, new IValue[] { TestRunner });
+
+			try
+			{
+				methodIndex = test.FindMethod(methodName);
+			}
+			catch
+			{
+				return -1;
+			}
+
+			try
+			{
 				test.CallAsProcedure(methodIndex, new IValue[] { });
 			}
+			catch (Exception e)
+			{
+				testException = e.ToString();
+				return 1;
+			}
+
+			return 0;
 		}
 
 		public ICodeSource LoadFromAssemblyResource(string resourceName)

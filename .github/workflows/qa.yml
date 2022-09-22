@@ -77,6 +77,7 @@ jobs:
             /d:sonar.host.url="${{ secrets.SONARQUBE_HOST }}"
             /d:sonar.login="${{ secrets.SONARQUBE_TOKEN }}"
             /d:sonar.branch.name="${{ env.BRANCH_NAME }}"
+            /d:sonar.cs.vscoveragexml.reportsPaths=./build/reports/coverage.xml
 
       # Начало анализа проекта в SonarQube (PR)
       # https://docs.sonarqube.org/latest/analysis/pull-request/
@@ -92,6 +93,7 @@ jobs:
             /d:sonar.pullrequest.branch=${{ github.event.pull_request.head.ref }}
             /d:sonar.pullrequest.base=${{ github.event.pull_request.base.ref }}
             /d:sonar.scm.revision=${{ github.event.pull_request.head.sha }}
+            /d:sonar.cs.vscoveragexml.reportsPaths=./build/reports/coverage.xml
 
       # Сборка компоненты для тестирования
       - name: Сборка компоненты для тестирования

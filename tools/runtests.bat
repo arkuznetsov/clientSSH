@@ -3,6 +3,12 @@
 echo %~dp0
 @chcp 65001
 
+set SSH_TEST_CWD=%~dp0..
+set SSH_TEST_TOOLS=%~dp0
+set SSH_TEST_SRC=%SSH_TEST_CWD%/src
+set SSH_TEST_KEY_PATH=%SSH_TEST_TOOLS%openssh/files/sftp-key
+set SSH_TEST_LIB_PATH=%SSH_TEST_CWD%/src/clientSSH/bin/Debug/net452/ClientSSH.dll
+
 FOR /f "usebackq tokens=*" %%a in ("%~dp0openssh\.env") DO (
   FOR /F "tokens=1,2 delims==" %%b IN ("%%a") DO (
     set "%%b=%%c"

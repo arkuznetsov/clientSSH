@@ -4,7 +4,15 @@
 
 name: Контроль качества
 # Любой пуш и pr в проекте но с фильтром по основному проекту
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+  pull_request:
+    branches:
+      - develop
 
 env:
   # отключение безопасности установки, от 2020-10-01

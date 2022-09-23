@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  PACKAGE_MASK: clientSSH-*.ospx
+  PACKAGE_MASK: ClientSSH-*.ospx
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
 jobs:

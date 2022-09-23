@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{DFE334BF-3243-4939-BD9E-045170645703}") = "oscript-ssh", "oscript-ssh\oscript-ssh.csproj", "{D0415022-7655-4764-BFD8-D5E0616C2BB2}"
+Project("{DFE334BF-3243-4939-BD9E-045170645703}") = "ClientSSH", "clientSSH\ClientSSH.csproj", "{D0415022-7655-4764-BFD8-D5E0616C2BB2}"
 EndProject
 Project("{DFE334BF-3243-4939-BD9E-045170645703}") = "TestApp", "TestApp\TestApp.csproj", "{4EA8C040-413C-4289-9C75-FF1306DD0560}"
 EndProject

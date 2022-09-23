@@ -51,9 +51,9 @@ namespace NUnitTests
 		[Category("Create SSH client")]
 		public void TestAsInternalObjects()
 		{
-			var item1 = new ClientSsh("", 22, "", "");
+			var item1 = new ClientSSH("", 22, "", "");
 
-			Assert.IsNotNull(item1, "Ошибка создания экземпляра класса {0}", typeof(ClientSsh)); 
+			Assert.IsNotNull(item1, "Ошибка создания экземпляра класса {0}", typeof(ClientSSH)); 
 		}
 
 		[TestCaseSource(nameof(TestCases))]

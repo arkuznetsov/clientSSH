@@ -4,8 +4,8 @@
 \.sonarqube/
 src/NUnitTests/bin/
 src/NUnitTests/obj/
-src/oscript-ssh/bin/
-src/oscript-ssh/obj/
+src/clientSSH/bin/
+src/clientSSH/obj/
 src/TestApp/bin/
 src/TestApp/obj/
 build/bin/

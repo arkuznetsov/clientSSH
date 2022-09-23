@@ -175,7 +175,7 @@ namespace NUnitTests
 
 		public ICodeSource LoadFromAssemblyResource(string resourceName)
 		{
-			var asm = System.Reflection.Assembly.GetExecutingAssembly();
+			var asm = Assembly.GetExecutingAssembly();
 			string codeSource;
 
 			using (Stream s = asm.GetManifestResourceStream(resourceName))

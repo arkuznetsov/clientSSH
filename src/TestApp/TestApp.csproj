@@ -9,6 +9,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resourses\testScript.os" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\clientSSH\ClientSSH.csproj">
       <Project>{D0415022-7655-4764-BFD8-D5E0616C2BB2}</Project>
       <Name>ClientSSH</Name>

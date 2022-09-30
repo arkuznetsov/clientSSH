@@ -34,8 +34,8 @@ rem @dotnet msbuild %OSC_BUILD_SRC% -property:Configuration=Release
 
 @rd /S /Q "%OSC_BUILD_BIN%" 
 @mkdir "%OSC_BUILD_BIN%"
-@xcopy %OSC_BUILD_BIN_OUT%\*.dll %OSC_BUILD_BIN%\
-@xcopy %OSC_BUILD_BIN_OUT%\*.xml %OSC_BUILD_BIN%\
+@xcopy "%OSC_BUILD_BIN_OUT%\*.dll" "%OSC_BUILD_BIN%\"
+@xcopy "%OSC_BUILD_BIN_OUT%\*.xml" "%OSC_BUILD_BIN%\"
 @del /F /Q "%OSC_BUILD_BIN%\OneScript*.*" "%OSC_BUILD_BIN%\ScriptEngine*.*" "%OSC_BUILD_BIN%\DotNetZip*.*" "%OSC_BUILD_BIN%\Newtonsoft*.*"
 
 @"C:\windows\system32\WindowsPowerShell\v1.0\powershell.exe" curl -o "%OSC_BUILD_ROOT%OneScriptDocumenter.zip" https://github.com/dmpas/OneScriptDocumenter/releases/download/1.0.14/documenter.zip

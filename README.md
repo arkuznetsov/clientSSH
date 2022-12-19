@@ -1,5 +1,3 @@
-# Oscript SSH client 
-
 [![GitHub release](https://img.shields.io/github/release/ArKuznetsov/clientSSH.svg?style=flat-square)](https://github.com/ArKuznetsov/clientSSH/releases)
 [![GitHub license](https://img.shields.io/github/license/ArKuznetsov/clientSSH.svg?style=flat-square)](https://github.com/ArKuznetsov/clientSSH/blob/develop/LICENSE)
 [![GitHub Releases](https://img.shields.io/github/downloads/ArKuznetsov/clientSSH/latest/total?style=flat-square)](https://github.com/ArKuznetsov/clientSSH/releases)
@@ -9,6 +7,10 @@
 [![Quality Gate](https://open.checkbsl.org/api/project_badges/measure?project=clientSSH&metric=alert_status)](https://open.checkbsl.org/dashboard/index/clientSSH)
 [![Coverage](https://open.checkbsl.org/api/project_badges/measure?project=clientSSH&metric=coverage)](https://open.checkbsl.org/dashboard/index/clientSSH)
 [![Tech debt](https://open.checkbsl.org/api/project_badges/measure?project=clientSSH&metric=sqale_index)](https://open.checkbsl.org/dashboard/index/clientSSH)
+
+<a href="https://checkbsl.org"><img alt="Checked by Silver Bulleters SonarQube BSL plugin" src="https://web-files.do.bit-erp.ru/sonar/b_t.png" align="right" style="width:400px"/></a>
+
+# Oscript SSH client 
 
 ## SSH клиент для oscript
 

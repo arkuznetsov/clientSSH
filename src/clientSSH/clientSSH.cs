@@ -16,7 +16,7 @@ namespace oscriptcomponent
     /// КлиентSSH
     /// </summary>
     [ContextClass("КлиентSSH", "ClientSSH")]
-    public class ClientSsh : AutoContext<ClientSsh>
+    public class ClientSSH : AutoContext<ClientSSH>
     {
         private readonly string _host;
         private readonly int _port;
@@ -25,7 +25,7 @@ namespace oscriptcomponent
         private PrivateKeyFile _keyfile;
         private bool _keyFileIsset;
 
-        public ClientSsh(string host, int port, string user, string pass)
+        public ClientSSH(string host, int port, string user, string pass)
         {
             
             _host = host;
@@ -109,7 +109,7 @@ namespace oscriptcomponent
         [ScriptConstructor]
         public static IRuntimeContextInstance Constructor(IValue host, IValue port, IValue user, IValue pass)
         {
-            return new ClientSsh(host.AsString(), (int) port.AsNumber() , user.AsString(), pass.AsString());
+            return new ClientSSH(host.AsString(), (int) port.AsNumber() , user.AsString(), pass.AsString());
         }
 
         private SshClient getSshClient()

@@ -4,6 +4,8 @@
 // В проекте TestApp должны быть подключены NuGet пакеты OneScript и OneScript.Library
 
 using System;
+using System.IO;
+using System.Reflection;
 using ScriptEngine.HostedScript;
 using ScriptEngine.HostedScript.Library;
 
@@ -12,15 +14,7 @@ namespace TestApp
 	class MainClass : IHostApplication
 	{
 
-		static readonly string SCRIPT = @"// Отладочный скрипт
-// в котором уже подключена наша компонента
-Порт = 22;
-
-Клиент = Новый КлиентSSH(""localhost"", Порт, """", """");
-
-Сообщить(""Ок!"");
-"
-		;
+		static readonly string SCRIPT = GetStringFromResource("TestApp.Resourses.testScript.os");
 
 		public static HostedScriptEngine StartEngine()
 		{
@@ -28,11 +22,8 @@ namespace TestApp
 			engine.Initialize();
 
 			// Тут можно указать любой класс из компоненты
-			engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(oscriptcomponent.ClientSsh)));
-
 			// Если проектов компонент несколько, то надо взять по классу из каждой из них
-			// engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(oscriptcomponent_2.MyClass_2)));
-			// engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(oscriptcomponent_3.MyClass_3)));
+			engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(oscriptcomponent.ClientSSH)));
 
 			return engine;
 		}
@@ -68,6 +59,22 @@ namespace TestApp
 		public string[] GetCommandLineArguments()
 		{
 			return new string[] { "1", "2", "3" }; // Здесь можно зашить список аргументов командной строки
+		}
+
+		static private string GetStringFromResource(string resourceName)
+		{
+			var asm = Assembly.GetExecutingAssembly();
+			string codeSource;
+
+			using (Stream s = asm.GetManifestResourceStream(resourceName))
+			{
+				using (StreamReader r = new StreamReader(s))
+				{
+					codeSource = r.ReadToEnd();
+				}
+			}
+
+			return codeSource;
 		}
 	}
 }

@@ -6,9 +6,9 @@
     <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\oscript-ssh\oscript-ssh.csproj">
+    <ProjectReference Include="..\clientSSH\ClientSSH.csproj">
       <Project>{D0415022-7655-4764-BFD8-D5E0616C2BB2}</Project>
-      <Name>oscript-ssh</Name>
+      <Name>ClientSSH</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

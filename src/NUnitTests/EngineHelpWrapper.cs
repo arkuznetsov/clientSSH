@@ -43,7 +43,7 @@ namespace NUnitTests
 
 			// Тут можно указать любой класс из компоненты
 			// Если проектов компонент несколько, то надо взять по классу из каждой из них
-			engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(oscriptcomponent.ClientSsh)));
+			engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(oscriptcomponent.ClientSSH)));
 
 			// Подключаем тестовую оболочку
 			engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(EngineHelpWrapper)));
@@ -175,7 +175,7 @@ namespace NUnitTests
 
 		public ICodeSource LoadFromAssemblyResource(string resourceName)
 		{
-			var asm = System.Reflection.Assembly.GetExecutingAssembly();
+			var asm = Assembly.GetExecutingAssembly();
 			string codeSource;
 
 			using (Stream s = asm.GetManifestResourceStream(resourceName))

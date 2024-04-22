@@ -1,5 +1,3 @@
-# Oscript SSH client 
-
 [![GitHub release](https://img.shields.io/github/release/ArKuznetsov/clientSSH.svg?style=flat-square)](https://github.com/ArKuznetsov/clientSSH/releases)
 [![GitHub license](https://img.shields.io/github/license/ArKuznetsov/clientSSH.svg?style=flat-square)](https://github.com/ArKuznetsov/clientSSH/blob/develop/LICENSE)
 [![GitHub Releases](https://img.shields.io/github/downloads/ArKuznetsov/clientSSH/latest/total?style=flat-square)](https://github.com/ArKuznetsov/clientSSH/releases)
@@ -10,13 +8,17 @@
 [![Coverage](https://open.checkbsl.org/api/project_badges/measure?project=clientSSH&metric=coverage)](https://open.checkbsl.org/dashboard/index/clientSSH)
 [![Tech debt](https://open.checkbsl.org/api/project_badges/measure?project=clientSSH&metric=sqale_index)](https://open.checkbsl.org/dashboard/index/clientSSH)
 
+<a href="https://checkbsl.org"><img alt="Checked by Silver Bulleters SonarQube BSL plugin" src="https://web-files.do.bit-erp.ru/sonar/b_t.png" align="right" style="width:400px"/></a>
+
+# Oscript SSH client 
+
 ## SSH клиент для oscript
 
 ## Примеры использования
 ### SSH клиент
 
 ```bsl
-#Использовать clientSSH
+#Использовать ClientSSH
     
 КлиентSSH = Новый КлиентSSH("127.0.0.1", 22, "user", "password");
 Соединение = КлиентSSH.ПолучитьСоединение();
@@ -35,7 +37,7 @@
 
 
 ```bsl
-#Использовать clientSSH
+#Использовать ClientSSH
 
 КлиентSSH = Новый КлиентSSH("127.0.0.1", 1543, "admin", "");
 Поток = КлиентSSH.ПолучитьПоток();
@@ -58,7 +60,7 @@
 ### Авторизация ssh с ключом
 
 ```bsl
-#Использовать clientSSH
+#Использовать ClientSSH
     
 КлиентSSH = Новый КлиентSSH("127.0.0.1", 22, "user", "");
 КлиентSSH.УстановитьКлюч("ПутьКСекретномуКлючу", "СекретнаяФраза");
@@ -72,7 +74,7 @@
 ### Передача файлов
 
 ```bsl
-#Использовать clientSSH
+#Использовать ClientSSH
     
 КлиентSSH = Новый КлиентSSH("127.0.0.1", 1543, "admin", "");
 Scp = КлиентSSH.ПолучитьScp();

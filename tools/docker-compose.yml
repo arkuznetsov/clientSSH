@@ -2,12 +2,12 @@ services:
  sftp:
     image: onescript-ssh/test-ssh
     build:
-        context: "."
+        context: "./openssh"
         args:
             SSH_TEST_USER: ${SSH_TEST_USER}
             SSH_TEST_PWD: ${SSH_TEST_PWD}
     container_name: test_ssh
     volumes:
-        - ./upload:/home/${SSH_TEST_USER}/upload:rw
+        - ./openssh/upload:/home/${SSH_TEST_USER}/upload:rw
     ports:
         - "2222:22"

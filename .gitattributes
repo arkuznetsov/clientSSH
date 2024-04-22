@@ -1,0 +1,5 @@
+tools/** -linguist-detectable
+build/** -linguist-detectable
+*.os -linguist-detectable
+*.bsl -linguist-detectable
+*.xml -linguist-detectable

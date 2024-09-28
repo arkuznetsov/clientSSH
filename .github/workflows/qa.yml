@@ -60,7 +60,7 @@ jobs:
           echo PWD: $PWD
           mkdir -p ./tools/openssh/upload
           chmod -R 700 ./tools/openssh/upload
-          docker-compose --file ./tools/openssh/docker-compose.yml up --build -d
+          docker-compose --file ./tools/docker-compose.yml up --build -d
 
       # Извлечение версии пакета
       - name: Получение packagedef
@@ -118,7 +118,7 @@ jobs:
           SSH_TEST_PWD: ${{ secrets.SSH_TEST_PWD }}
         run: |
           mkdir "./build/reports"
-          dotnet-coverage collect -o ./build/reports/coverage.xml -f xml "./tools/NUnit.ConsoleRunner.3.6.1/tools/nunit3-console.exe ./src/NUnitTests/bin/Debug/net452/NUnitTests.dll --result=./build/reports/nunit-result.xml"
+          dotnet-coverage collect -o ./build/reports/coverage.xml -f xml "./tools/NUnit.ConsoleRunner.3.6.1/tools/nunit3-console.exe ./src/NUnitTests/bin/Debug/net48/NUnitTests.dll --result=./build/reports/nunit-result.xml"
 
       # Завершение анализа проекта в SonarQube
       - name: Завершение анализа проекта в SonarQube

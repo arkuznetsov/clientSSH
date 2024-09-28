@@ -20,44 +20,35 @@ namespace NUnitTests
 	public class EngineHelpWrapper : IHostApplication
 	{
 
-		private HostedScriptEngine engine;
+		private HostedScriptEngine _engine;
+		private string _resourceName;
+		private ScriptEngine.ModuleImage _module;
 
-		public EngineHelpWrapper()
+		private UserScriptContextInstance _testModule;
+		private ArrayImpl _testMethods;
+
+		public EngineHelpWrapper(string resourceName)
 		{
-		}
-
-		public HostedScriptEngine Engine
-		{
-			get
-			{
-				return engine;
-			}
-		}
-
-		public IValue TestRunner { get; private set; }
-
-		public HostedScriptEngine StartEngine()
-		{
-			engine = new HostedScriptEngine();
-			engine.Initialize();
+			_engine = new HostedScriptEngine();
+			_engine.Initialize();
 
 			// Тут можно указать любой класс из компоненты
 			// Если проектов компонент несколько, то надо взять по классу из каждой из них
-			engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(oscriptcomponent.ClientSSH)));
+			_engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(oscriptcomponent.ClientSSH)));
 
 			// Подключаем тестовую оболочку
-			engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(EngineHelpWrapper)));
+			_engine.AttachAssembly(System.Reflection.Assembly.GetAssembly(typeof(EngineHelpWrapper)));
 
 			var testrunnerSource = LoadFromAssemblyResource("NUnitTests.Tests.testrunner.os");
-			var testrunnerModule = engine.GetCompilerService().Compile(testrunnerSource);
+			var testrunnerModule = _engine.GetCompilerService().Compile(testrunnerSource);
 			
 			{
-				var mi = engine.GetType().GetMethod("SetGlobalEnvironment",
+				var mi = _engine.GetType().GetMethod("SetGlobalEnvironment",
 					BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.InvokeMethod | BindingFlags.Instance);
-				mi.Invoke(engine, new object[] {this, testrunnerSource});
+				mi.Invoke(_engine, new object[] {this, testrunnerSource});
 			}
 
-			engine.LoadUserScript(new ScriptEngine.UserAddedScript()
+			_engine.LoadUserScript(new ScriptEngine.UserAddedScript()
 			{
 				Type = ScriptEngine.UserAddedScriptType.Class,
 				Image = testrunnerModule,
@@ -67,93 +58,61 @@ namespace NUnitTests
 			var testRunner = AttachedScriptsFactory.ScriptFactory("TestRunner", new IValue[] { });
 			TestRunner = ValueFactory.Create(testRunner);
 
-			return engine;
-		}
+			_resourceName = resourceName;
+			var source = LoadFromAssemblyResource(_resourceName);
+			_module = _engine.GetCompilerService().Compile(source);
 
-		public void RunTestScript(string resourceName)
-		{
-
-			ArrayImpl testArray = GetTestMethods(resourceName);
-
-			Console.WriteLine("Всего тестов: {0}", testArray.Count());
-
-			int testResult;
-			string testException;
-
-			foreach (var ivTestName in testArray)
-			{
-				string testName = ivTestName.AsString();
-
-				Console.WriteLine("Скрипт: {0}, тест: {1}", resourceName, testName);
-
-				testResult = RunTestMethod(resourceName, testName, out testException);
-				switch (testResult)
-				{
-					case -1:
-						Console.WriteLine("Тест: {0} не реализован!", testName);
-						break;
-					case 0:
-						Console.WriteLine("Тест: {0} пройден!", testName);
-						break;
-					case 1:
-						Console.WriteLine("Тест: {0} провален с сообщением: {1}", testName, testException);
-						break;
-					default:
-						Console.WriteLine("Тест: {0} вернул неожиданный результат: {1}", testName, testResult);
-						break;
-				}
-			}
-		}
-
-		public ArrayImpl GetTestMethods(string resourceName)
-		{
-			var source = LoadFromAssemblyResource(resourceName);
-			var module = engine.GetCompilerService().Compile(source);
-
-			engine.LoadUserScript(new ScriptEngine.UserAddedScript()
+			_engine.LoadUserScript(new ScriptEngine.UserAddedScript()
 			{
 				Type = ScriptEngine.UserAddedScriptType.Class,
-				Image = module,
-				Symbol = resourceName
+				Image = _module,
+				Symbol = _resourceName
 			});
 
-			var test = AttachedScriptsFactory.ScriptFactory(resourceName, new IValue[] { });
-			ArrayImpl testArray;
-			{
-				int methodIndex = test.FindMethod("ПолучитьСписокТестов");
+			_testModule = AttachedScriptsFactory.ScriptFactory(_resourceName, new IValue[] { });
 
-				{
-					IValue ivTests;
-					test.CallAsFunction(methodIndex, new IValue[] { TestRunner }, out ivTests);
-					testArray = ivTests as ArrayImpl;
-				}
+			int methodIndex = _testModule.FindMethod("ПолучитьСписокТестов");
+
+			{
+				IValue ivTests;
+				_testModule.CallAsFunction(methodIndex, new IValue[] { TestRunner }, out ivTests);
+				_testMethods = ivTests as ArrayImpl;
 			}
 
-			return testArray;
 		}
 
-		public int RunTestMethod(string resourceName, string methodName, out string testException)
+		public HostedScriptEngine Engine
+		{
+			get
+			{
+				return _engine;
+			}
+		}
+
+		public ArrayImpl TestMethods
+		{
+			get
+			{
+				return _testMethods;
+			}
+		}
+
+		public IValue TestRunner { get; private set; }
+
+		public int RunTestMethod(string methodName, out string testException)
 		{
 			testException = "";
 
-			var source = LoadFromAssemblyResource(resourceName);
-			var module = engine.GetCompilerService().Compile(source);
+			int methodIndex;
 
-			engine.LoadUserScript(new ScriptEngine.UserAddedScript()
+			if (ValueFactory.Create() == _testMethods.Find(ValueFactory.Create(methodName)))
 			{
-				Type = ScriptEngine.UserAddedScriptType.Class,
-				Image = module,
-				Symbol = resourceName
-			});
-
-			var test = AttachedScriptsFactory.ScriptFactory(resourceName, new IValue[] { });
-
-			int methodIndex = test.FindMethod("ПолучитьСписокТестов");
-			test.CallAsProcedure(methodIndex, new IValue[] { TestRunner });
+				return -1;
+			}
 
 			try
 			{
-				methodIndex = test.FindMethod(methodName);
+				methodIndex = _testModule.FindMethod(methodName);
 			}
 			catch
 			{
@@ -162,7 +121,7 @@ namespace NUnitTests
 
 			try
 			{
-				test.CallAsProcedure(methodIndex, new IValue[] { });
+				_testModule.CallAsProcedure(methodIndex, new IValue[] { });
 			}
 			catch (Exception e)
 			{
@@ -186,7 +145,7 @@ namespace NUnitTests
 				}
 			}
 
-			return engine.Loader.FromString(codeSource);
+			return _engine.Loader.FromString(codeSource);
 		}
 
 		public void Echo(string str, MessageStatusEnum status = MessageStatusEnum.Ordinary)

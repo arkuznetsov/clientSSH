@@ -27,7 +27,7 @@ namespace oscriptcomponent
             _sshClient = ssh;
             _sshClient.Connect();
             
-            _sshStream = _sshClient.CreateShellStream("xterm", 80, 50, 1024, 1024, 1024);
+            _sshStream = _sshClient.CreateShellStreamNoTerminal();
 
             while (!_sshStream.DataAvailable)
                 System.Threading.Thread.Sleep(200);

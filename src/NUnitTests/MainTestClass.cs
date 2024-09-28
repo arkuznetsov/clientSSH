@@ -26,12 +26,9 @@ namespace NUnitTests
 			get
 			{
 				var testCases = new List<TestCaseData>();
-				EngineHelpWrapper _host = new EngineHelpWrapper();
-				_host.StartEngine();
+				EngineHelpWrapper host = new EngineHelpWrapper("NUnitTests.Tests.external.os");
 
-				ArrayImpl testMethods =_host.GetTestMethods("NUnitTests.Tests.external.os");
-
-				foreach (var ivTestMethod in testMethods)
+				foreach (var ivTestMethod in host.TestMethods)
 				{
 					testCases.Add(new TestCaseData(ivTestMethod.ToString()));
 				}
@@ -43,8 +40,7 @@ namespace NUnitTests
 		[OneTimeSetUp]
 		public void Initialize()
 		{
-			_host = new EngineHelpWrapper();
-			_host.StartEngine();
+			_host = new EngineHelpWrapper("NUnitTests.Tests.external.os");
 		}
 
 		[Test]
@@ -62,7 +58,7 @@ namespace NUnitTests
 		{
 			string testException;
 
-			int result = _host.RunTestMethod("NUnitTests.Tests.external.os", testCase, out testException);
+			int result = _host.RunTestMethod(testCase, out testException);
 			
 			switch (result)
 			{

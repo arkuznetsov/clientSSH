@@ -31,11 +31,11 @@
   If not set, SonarQube starts looking for source code from the directory containing
   the sonar-project.properties file.
   -->
-  <Property Name="sonar.sources">./src/clientSSH,./src/NUnitTests,./src/TestApp</Property>
+  <Property Name="sonar.sources">./src</Property>
 
   <Property Name="sonar.tests">./src/NUnitTests,./src/TestApp</Property>
 
-  <Property Name="sonar.inclusions">**/*.cs</Property>
+  <Property Name="sonar.inclusions">./src/**/*.cs</Property>
   <Property Name="sonar.scm.enabled">true</Property>
   <Property Name="sonar.scm.provider">git</Property>
 

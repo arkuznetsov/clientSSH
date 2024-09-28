@@ -47,7 +47,7 @@ jobs:
 
       # Заливка артефактов
       - name: Заливка артефактов
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: package.zip
           path: ./build/${{ env.PACKAGE_MASK }}

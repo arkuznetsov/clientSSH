@@ -1,10 +1,10 @@
 Описание
 	.Имя("ClientSSH")
-	.Версия("0.5.1")
+	.Версия("0.5.2")
 	.Автор("a.sosnoviy aka lab; Artem Kuznetsov")
 	.АдресАвтора("int-it@yandex.ru; ArKuznetsov@gmail.com")
 	.Описание("ssh client для oscript")
-	.ВерсияСреды("1.6")
+	.ВерсияСреды("1.8")
 	.ВключитьФайл("bin")
 	.ВключитьФайл("package-loader.os")
 	.ВключитьФайл("../README.md")

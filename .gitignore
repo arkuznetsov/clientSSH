@@ -14,4 +14,4 @@ build/reports/
 map.json
 tools/nuget.exe
 tools/test
-tools/NUnit.ConsoleRunner.3.6.1
+tools/NUnit.ConsoleRunner*

@@ -31,7 +31,7 @@
   If not set, SonarQube starts looking for source code from the directory containing
   the sonar-project.properties file.
   -->
-  <Property Name="sonar.sources">./src</Property>
+  <Property Name="sonar.sources">./src/clientSSH,./src/NUnitTests,./src/TestApp</Property>
 
   <Property Name="sonar.tests">./src/NUnitTests,./src/TestApp</Property>
 

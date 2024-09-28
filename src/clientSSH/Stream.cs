@@ -18,27 +18,28 @@ namespace oscriptcomponent
     [ContextClass("ПотокSSH", "StreamSSH")]
     public class Stream : AutoContext<Stream>
     {
-  
         private readonly SshClient _sshClient;
         private readonly ShellStream _sshStream;
 
-        public Stream(SshClient ssh)
+        public Stream(SshClient ssh, int timeout = 0)
         {
             _sshClient = ssh;
             _sshClient.Connect();
-            
+
             _sshStream = _sshClient.CreateShellStreamNoTerminal();
 
-            while (!_sshStream.DataAvailable)
+            int endTime = timeout;
+
+            while (!_sshStream.DataAvailable && (timeout == 0 || endTime > 0))
+            {
                 System.Threading.Thread.Sleep(200);
-        
+                endTime = endTime - 200;
+            }
+
             var line = _sshStream.Read();
             _sshStream.Flush();
-  
         }
 
-        
-        
         /// <summary>
         /// Записать в поток
         /// </summary>
@@ -46,11 +47,9 @@ namespace oscriptcomponent
         [ContextMethod("ЗаписатьВПоток")]
          public string WriteLine(string command)
         {
-    
             _sshStream.Flush();
             _sshStream.WriteLine(command);
 
-            
             StringBuilder output = new StringBuilder();
  
             string line;
@@ -58,9 +57,8 @@ namespace oscriptcomponent
             while (!_sshStream.DataAvailable)
                 System.Threading.Thread.Sleep(200);
 
-//            System.Threading.Thread.Sleep(200);
             var num = 0;
-            
+
             while (_sshStream.DataAvailable)
             {
                 if (num > 1)
@@ -72,22 +70,17 @@ namespace oscriptcomponent
                 num++;
                 
             }
-         
 
             return output.ToString();
-
         }
 
-        
         /// <summary>
         /// Закрыть соединение
         /// </summary>
         [ContextMethod("Отключиться")]
         public void DisconnectStream()
         {
-    
             _sshClient.Disconnect();
-      
         }
     }
 }

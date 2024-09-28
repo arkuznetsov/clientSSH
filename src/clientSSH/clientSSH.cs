@@ -40,12 +40,12 @@ namespace oscriptcomponent
         /// Получить Поток
         /// </summary>
         [ContextMethod("ПолучитьПоток")]
-        public Stream CreateStream()
+        public Stream CreateStream(int timeout = 0)
         {
 
             var sclient = getSshClient();
             
-            return new Stream(sclient);
+            return new Stream(sclient, timeout);
         }
 
         

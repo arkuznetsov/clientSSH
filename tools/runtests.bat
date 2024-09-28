@@ -9,12 +9,12 @@ set OSC_TEST_ROOT=%~dp0
 set OSC_TEST_CWD=%OSC_TEST_ROOT%..
 set OSC_TEST_SRC=%OSC_TEST_ROOT%../src
 
-set OSC_TEST_LIB=%OSC_TEST_SRC%/%OSC_TEST_NAME%/bin/Debug/net452/%OSC_TEST_NAME%.dll
+set OSC_TEST_LIB=%OSC_TEST_SRC%/%OSC_TEST_NAME%/bin/Debug/net48/%OSC_TEST_NAME%.dll
 
 set OSC_TEST_TOOLS=%OSC_TEST_ROOT%
 set OSC_TEST_NUGET=%OSC_TEST_TOOLS%nuget.exe
 set OSC_TEST_NUNIT3=%OSC_TEST_TOOLS%NUnit.ConsoleRunner.3.6.1
-set OSC_TEST_NUNIT3_TESTS=%OSC_TEST_SRC%/NUnitTests/bin/Debug/net452/NUnitTests.dll
+set OSC_TEST_NUNIT3_TESTS=%OSC_TEST_SRC%/NUnitTests/bin/Debug/net48/NUnitTests.dll
 
 set OSC_TEST_REPORTS=%OSC_TEST_ROOT%../build/reports
 

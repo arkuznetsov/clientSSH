@@ -60,7 +60,7 @@ jobs:
           echo PWD: $PWD
           mkdir -p ./tools/openssh/upload
           chmod -R 700 ./tools/openssh/upload
-          docker-compose --file ./tools/openssh/docker-compose.yml up --build -d
+          docker-compose --file ./tools/docker-compose.yml up --build -d
 
       # Извлечение версии пакета
       - name: Получение packagedef

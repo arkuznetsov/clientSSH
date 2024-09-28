@@ -19,6 +19,7 @@ env:
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
   PROJECT_KEY: "clientSSH"
+  JAVA_HOME: "C:\\Program Files\\Java\\zulu-jdk-fx-17.0.12"
 
 jobs:
   build:
